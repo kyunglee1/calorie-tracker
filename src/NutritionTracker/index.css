@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-view {
+  width: 50%;
+  border: thin solid black;
+  background-color: rgb(163, 195, 245);
+  display: grid;
+  grid: 9fr 1fr 9fr 9fr / 1fr 2fr 1fr;
+  grid-template-areas:
+    '. . .'
+    '. search .'
+    '. table .'
+    '. . .';
+}
+
+.right-view {
+  width: 50%;
+  display: grid;
+  grid: 1fr 3fr 1fr / 1fr 2fr 1fr;
+  grid-template-areas:
+    '. . .'
+    '. table .'
+    '. . .';
+}
