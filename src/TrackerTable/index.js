@@ -4,7 +4,8 @@ import TrackingRow from '../TrackingRow/index';
 import './index.css';
 
 const TrackerTable = ({ fdcId }) => {
-  const [trackedFoods, setTrackedFoods] = useState([]);
+  const [calorieLog, setCalorieLog] = useState([]);
+  const [totalCalories, setTotalCalories] = useState(0);
 
   useEffect(() => {
     if (!fdcId) {
@@ -18,7 +19,10 @@ const TrackerTable = ({ fdcId }) => {
       .then((data) => {
         // eslint-disable-next-line no-console
         console.log(data);
-        setTrackedFoods((prev) => [
+        const calories = data.foodNutrients.find((x) => x.nutrient.id === 1008)
+          .amount;
+        setTotalCalories((prev) => prev + calories);
+        setCalorieLog((prev) => [
           ...prev,
           <TrackingRow key={fdcId} data={data} />,
         ]);
@@ -29,10 +33,18 @@ const TrackerTable = ({ fdcId }) => {
     <table className="tracker-table">
       <thead>
         <tr>
-          <td colSpan="2">Calorie Tracker</td>
+          <td colSpan="2">Calorie Log</td>
         </tr>
       </thead>
-      <tbody>{trackedFoods}</tbody>
+      <tbody>{calorieLog}</tbody>
+      {calorieLog.length > 0 && (
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td>{`${totalCalories} kcal`}</td>
+          </tr>
+        </tfoot>
+      )}
     </table>
   );
 };
