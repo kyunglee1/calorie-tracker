@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import TrackingRow from '../TrackingRow/index';
+import CalorieLogPane from '../CalorieLogPane/index';
 import './index.css';
 
-const TrackerTable = ({ fdcId }) => {
-  const [calorieLog, setCalorieLog] = useState([]);
+const CalorieLog = ({ fdcId }) => {
+  const [panes, setPanes] = useState([]);
   const [totalCalories, setTotalCalories] = useState(0);
 
   useEffect(() => {
@@ -17,14 +17,12 @@ const TrackerTable = ({ fdcId }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        // eslint-disable-next-line no-console
-        console.log(data);
         const calories = data.foodNutrients.find((x) => x.nutrient.id === 1008)
           .amount;
         setTotalCalories((prev) => prev + calories);
-        setCalorieLog((prev) => [
+        setPanes((prev) => [
           ...prev,
-          <TrackingRow key={fdcId} data={data} />,
+          <CalorieLogPane key={fdcId} data={data} />,
         ]);
       });
   }, [fdcId]);
@@ -33,14 +31,14 @@ const TrackerTable = ({ fdcId }) => {
     <table className="tracker-table">
       <thead>
         <tr>
-          <td colSpan="2">Calorie Log</td>
+          <td colSpan="3">Calorie Log</td>
         </tr>
       </thead>
-      <tbody>{calorieLog}</tbody>
-      {calorieLog.length > 0 && (
+      <tbody>{panes}</tbody>
+      {panes.length > 0 && (
         <tfoot>
           <tr>
-            <td>Total</td>
+            <td colSpan="2">Total</td>
             <td>{`${totalCalories} kcal`}</td>
           </tr>
         </tfoot>
@@ -49,4 +47,4 @@ const TrackerTable = ({ fdcId }) => {
   );
 };
 
-export default TrackerTable;
+export default CalorieLog;

@@ -5,7 +5,6 @@ import './index.css';
 
 const ResultsTable = ({ item, onAddClick }) => {
   const [rows, setRows] = useState([]);
-  const tempRows = [];
 
   useEffect(() => {
     fetch(
@@ -13,14 +12,17 @@ const ResultsTable = ({ item, onAddClick }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        // eslint-disable-next-line no-console
-        console.log(data);
-        data.foods.forEach((obj) =>
-          tempRows.push(
-            <ResultRow key={obj.fdcId} data={obj} onRowClick={onAddClick} />
+        const results = [];
+        data.foods.forEach((result) =>
+          results.push(
+            <ResultRow
+              key={result.fdcId}
+              data={result}
+              onRowClick={onAddClick}
+            />
           )
         );
-        setRows(tempRows);
+        setRows(results);
       });
   }, [item]);
 

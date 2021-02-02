@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import SearchBar from '../SearchBar/index';
 import ResultsTable from '../ResultsTable/index';
-import TrackerTable from '../TrackerTable/index';
+import CalorieLog from '../CalorieLog/index';
 import './index.css';
 
 const NutritionTracker = () => {
@@ -25,8 +25,6 @@ const NutritionTracker = () => {
   };
 
   const handleAddClick = (id) => {
-    // eslint-disable-next-line no-alert
-    alert(id);
     setFdcId(id);
     setClickedSearch(false);
     setFood('');
@@ -45,7 +43,7 @@ const NutritionTracker = () => {
         )}
       </div>
       <div className="right-view">
-        <TrackerTable fdcId={fdcId} />
+        <CalorieLog fdcId={fdcId} />
       </div>
     </div>
   );

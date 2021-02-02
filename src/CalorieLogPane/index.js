@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-const TrackingRow = ({ data }) => {
+const CalorieLogPane = ({ data }) => {
   const { description } = data;
   const { servingSize } = data;
   const { servingSizeUnit } = data;
@@ -17,4 +17,4 @@ const TrackingRow = ({ data }) => {
   );
 };
 
-export default TrackingRow;
+export default CalorieLogPane;
