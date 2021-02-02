@@ -2,7 +2,7 @@
 import React from 'react';
 import './index.css';
 
-const SearchBar = ({ inputText, onInputChange }) => (
+const SearchBar = ({ inputText, onInputChange, onSearchClick }) => (
   <div className="search-bar">
     <input
       className="search-input"
@@ -10,7 +10,7 @@ const SearchBar = ({ inputText, onInputChange }) => (
       value={inputText}
       onChange={onInputChange}
     />
-    <button className="search-button" type="button">
+    <button className="search-button" type="button" onClick={onSearchClick}>
       search
     </button>
   </div>
