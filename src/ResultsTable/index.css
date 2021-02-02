@@ -1,0 +1,12 @@
+.results-table {
+  grid-area: table;
+  height: 100%;
+  background-color: white;
+  text-align: center;
+  border: thin solid black;
+  font-size: 1.6rem;
+}
+
+.results-table tr td {
+  border-bottom: thin solid black;
+}

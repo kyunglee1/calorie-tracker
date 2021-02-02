@@ -1,16 +1,8 @@
-table {
+.tracker-table {
   grid-area: table;
   height: 100%;
   background-color: white;
   text-align: center;
-}
-
-.results-table {
-  border: thin solid black;
-  font-size: 1.6rem;
-}
-
-.tracker-table {
   border: 5px double peru;
   padding: 2rem;
   font-size: 1.6rem;
