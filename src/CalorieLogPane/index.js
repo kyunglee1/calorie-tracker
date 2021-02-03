@@ -17,7 +17,7 @@ const CalorieLogPane = ({ data, onDeleteClick }) => {
       <button className="remove-button" type="button" onClick={handleClick}>
         X
       </button>
-      <span>{description}</span>
+      <span className="log-description">{description.toUpperCase()}</span>
       <span>{`Serving Size: ${servingSize}${servingSizeUnit}`}</span>
       <span>{`${calories} kcal`}</span>
     </div>

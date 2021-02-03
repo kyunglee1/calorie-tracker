@@ -11,6 +11,7 @@ const NutritionTracker = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [fdcId, setFdcId] = useState('');
   // useReducer
+  console.log(searchResults);
 
   const handleInputChange = (e) => {
     const input = e.target.value;
