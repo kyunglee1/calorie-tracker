@@ -4,11 +4,10 @@ import React from 'react';
 const ResultRow = ({ data, onRowClick }) => {
   const { description } = data;
   const { brandOwner } = data;
-  const { fdcId } = data;
   const calories = data.foodNutrients.find((x) => x.nutrientId === 1008)?.value;
 
   const handleClick = () => {
-    onRowClick(fdcId);
+    onRowClick(data.fdcId);
   };
 
   return (

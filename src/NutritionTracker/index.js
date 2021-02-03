@@ -8,6 +8,7 @@ import './index.css';
 const NutritionTracker = () => {
   const [food, setFood] = useState('');
   const [clickedSearch, setClickedSearch] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
   const [fdcId, setFdcId] = useState('');
   // useReducer
 
@@ -19,15 +20,23 @@ const NutritionTracker = () => {
 
   const handleSearchClick = () => {
     const input = food.trim();
-    if (input) {
-      setClickedSearch(true);
+    if (!input) {
+      return;
     }
+
+    setClickedSearch(true);
+
+    fetch(
+      `https://api.nal.usda.gov/fdc/v1/foods/search?query=${food}&api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy&pageSize=3&pageNumber=1`
+    )
+      .then((res) => res.json())
+      .then((data) => setSearchResults(data.foods));
   };
 
   const handleAddClick = (id) => {
-    setFdcId(id);
     setClickedSearch(false);
     setFood('');
+    setFdcId(id);
   };
 
   return (
@@ -39,11 +48,11 @@ const NutritionTracker = () => {
           onSearchClick={handleSearchClick}
         />
         {clickedSearch && (
-          <ResultsTable item={food} onAddClick={handleAddClick} />
+          <ResultsTable results={searchResults} onAddClick={handleAddClick} />
         )}
       </div>
       <div className="right-view">
-        <CalorieLog fdcId={fdcId} />
+        <CalorieLog results={searchResults} fdcId={fdcId} />
       </div>
     </div>
   );
