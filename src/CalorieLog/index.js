@@ -18,7 +18,7 @@ const CalorieLog = ({ fdcId }) => {
       .then((res) => res.json())
       .then((data) => {
         const calories = data.foodNutrients.find((x) => x.nutrient.id === 1008)
-          .amount;
+          ?.amount;
         setTotalCalories((prev) => prev + calories);
         setPanes((prev) => [
           ...prev,
@@ -28,23 +28,35 @@ const CalorieLog = ({ fdcId }) => {
   }, [fdcId]);
 
   return (
-    <table className="tracker-table">
-      <thead>
-        <tr>
-          <td colSpan="3">Calorie Log</td>
-        </tr>
-      </thead>
-      <tbody>{panes}</tbody>
+    <div className="log-container">
+      <div id="log-header">Calorie Log</div>
+      <div className="panes">{panes}</div>
       {panes.length > 0 && (
-        <tfoot>
-          <tr>
-            <td colSpan="2">Total</td>
-            <td>{`${totalCalories} kcal`}</td>
-          </tr>
-        </tfoot>
+        <div id="log-footer">
+          <span>{`Total: ${totalCalories} kcal`}</span>
+        </div>
       )}
-    </table>
+    </div>
   );
+
+  // return (
+  //   <table className="tracker-table">
+  //     <thead>
+  //       <tr>
+  //         <td colSpan="3">Calorie Log</td>
+  //       </tr>
+  //     </thead>
+  //     <tbody>{panes}</tbody>
+  //     {panes.length > 0 && (
+  //       <tfoot>
+  //         <tr>
+  //           <td colSpan="2">Total</td>
+  //           <td>{`${totalCalories} kcal`}</td>
+  //         </tr>
+  //       </tfoot>
+  //     )}
+  //   </table>
+  // );
 };
 
 export default CalorieLog;
