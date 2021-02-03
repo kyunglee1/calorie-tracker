@@ -5,7 +5,7 @@ const ResultRow = ({ data, onRowClick }) => {
   const { description } = data;
   const { brandOwner } = data;
   const { fdcId } = data;
-  const calories = data.foodNutrients.find((x) => x.nutrientId === 1008).value;
+  const calories = data.foodNutrients.find((x) => x.nutrientId === 1008)?.value;
 
   const handleClick = () => {
     onRowClick(fdcId);

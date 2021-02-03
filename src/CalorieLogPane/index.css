@@ -1,0 +1,17 @@
+.log-pane {
+  display: flex;
+  justify-content: space-between;
+  border: thin solid black;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  padding: 1rem;
+  background-color: rgb(245, 211, 167);
+}
+
+.remove-button {
+  border-radius: 0.5rem;
+  background-color: rgb(240, 62, 62);
+  outline: none;
+
+  color: white;
+}
