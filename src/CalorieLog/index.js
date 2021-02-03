@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CalorieLogPane from '../CalorieLogPane/index';
 import './index.css';
 
-const CalorieLog = ({ fdcId }) => {
+const CalorieLog = ({ results, fdcId }) => {
   const [panes, setPanes] = useState([]);
   const [totalCalories, setTotalCalories] = useState(0);
 
@@ -13,33 +13,26 @@ const CalorieLog = ({ fdcId }) => {
   };
 
   useEffect(() => {
-    if (!fdcId) {
-      return;
-    }
+    if (!fdcId) return;
 
-    fetch(
-      `https://api.nal.usda.gov/fdc/v1/food/${fdcId}?api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const calories = data.foodNutrients.find((x) => x.nutrient.id === 1008)
-          ?.amount;
-        setTotalCalories((prev) => prev + calories);
-        setPanes((prev) => [
-          ...prev,
-          {
-            id: fdcId,
-            pane: (
-              <CalorieLogPane
-                key={fdcId}
-                id={fdcId}
-                data={data}
-                onDeleteClick={handleDeleteClick}
-              />
-            ),
-          },
-        ]);
-      });
+    const item = results.find((entry) => entry.fdcId === fdcId);
+    const calories = item.foodNutrients.find((x) => x.nutrientId === 1008)
+      ?.value;
+
+    setTotalCalories((prev) => prev + calories);
+    setPanes((prev) => [
+      ...prev,
+      {
+        id: fdcId,
+        pane: (
+          <CalorieLogPane
+            key={fdcId}
+            data={item}
+            onDeleteClick={handleDeleteClick}
+          />
+        ),
+      },
+    ]);
   }, [fdcId]);
 
   return (
