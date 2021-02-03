@@ -7,6 +7,11 @@ const CalorieLog = ({ fdcId }) => {
   const [panes, setPanes] = useState([]);
   const [totalCalories, setTotalCalories] = useState(0);
 
+  const handleDeleteClick = (id, calories) => {
+    setPanes((prevPanes) => [...prevPanes].filter((pane) => pane.id !== id));
+    setTotalCalories((prev) => prev - calories);
+  };
+
   useEffect(() => {
     if (!fdcId) {
       return;
@@ -22,7 +27,17 @@ const CalorieLog = ({ fdcId }) => {
         setTotalCalories((prev) => prev + calories);
         setPanes((prev) => [
           ...prev,
-          <CalorieLogPane key={fdcId} data={data} />,
+          {
+            id: fdcId,
+            pane: (
+              <CalorieLogPane
+                key={fdcId}
+                id={fdcId}
+                data={data}
+                onDeleteClick={handleDeleteClick}
+              />
+            ),
+          },
         ]);
       });
   }, [fdcId]);
@@ -30,7 +45,7 @@ const CalorieLog = ({ fdcId }) => {
   return (
     <div className="log-container">
       <div id="log-header">Calorie Log</div>
-      <div className="panes">{panes}</div>
+      <div className="panes">{panes.map((x) => x.pane)}</div>
       {panes.length > 0 && (
         <div id="log-footer">
           <span>{`Total: ${totalCalories} kcal`}</span>
@@ -38,25 +53,6 @@ const CalorieLog = ({ fdcId }) => {
       )}
     </div>
   );
-
-  // return (
-  //   <table className="tracker-table">
-  //     <thead>
-  //       <tr>
-  //         <td colSpan="3">Calorie Log</td>
-  //       </tr>
-  //     </thead>
-  //     <tbody>{panes}</tbody>
-  //     {panes.length > 0 && (
-  //       <tfoot>
-  //         <tr>
-  //           <td colSpan="2">Total</td>
-  //           <td>{`${totalCalories} kcal`}</td>
-  //         </tr>
-  //       </tfoot>
-  //     )}
-  //   </table>
-  // );
 };
 
 export default CalorieLog;
