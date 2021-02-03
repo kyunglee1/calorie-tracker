@@ -12,8 +12,12 @@ const CalorieLog = ({ results, fdcId }) => {
     setTotalCalories((prev) => prev - calories);
   };
 
+  // perhaps 2 separate useEffects
   useEffect(() => {
     if (!fdcId) return;
+
+    const duplicate = panes.find((pane) => pane.id === fdcId);
+    if (duplicate) return;
 
     const item = results.find((entry) => entry.fdcId === fdcId);
     const calories = item.foodNutrients.find((x) => x.nutrientId === 1008)
