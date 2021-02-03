@@ -13,8 +13,8 @@ const ResultRow = ({ data, onRowClick }) => {
   return (
     <tr onClick={handleClick}>
       <td>{description}</td>
-      <td>{brandOwner}</td>
-      <td>{`Cal: ${calories} per serving`}</td>
+      <td>{brandOwner || 'N/A'}</td>
+      <td>{calories || 'N/A'}</td>
     </tr>
   );
 };

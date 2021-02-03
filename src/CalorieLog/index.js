@@ -14,14 +14,12 @@ const CalorieLog = ({ results, fdcId }) => {
 
   // perhaps 2 separate useEffects
   useEffect(() => {
-    if (!fdcId) return;
-
-    const duplicate = panes.find((pane) => pane.id === fdcId);
-    if (duplicate) return;
+    const isDuplicate = panes.find((pane) => pane.id === fdcId);
+    if (isDuplicate || !fdcId) return;
 
     const item = results.find((entry) => entry.fdcId === fdcId);
-    const calories = item.foodNutrients.find((x) => x.nutrientId === 1008)
-      ?.value;
+    const calories =
+      item.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
 
     setTotalCalories((prev) => prev + calories);
     setPanes((prev) => [
@@ -31,7 +29,7 @@ const CalorieLog = ({ results, fdcId }) => {
         pane: (
           <CalorieLogPane
             key={fdcId}
-            data={item}
+            entry={item}
             onDeleteClick={handleDeleteClick}
           />
         ),

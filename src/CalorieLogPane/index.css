@@ -15,8 +15,12 @@
   outline: none;
   height: 2.3rem;
   color: white;
+  align-self: flex-start;
 }
 
 .log-description {
   width: 30%;
+}
+
+.log-pane span {
 }
