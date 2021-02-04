@@ -19,7 +19,6 @@ const CalorieLog = ({ results, fdcId }) => {
     });
   };
 
-  // perhaps 2 separate useEffects
   useEffect(() => {
     if (!fdcId) return;
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import './index.css';
@@ -6,6 +7,7 @@ const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
   const [portionSize, setPortionSize] = useState(100);
   const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
+  // Maybe get rid of bottom cus its calculable.
   const [calorieCount, setCalorieCount] = useState(calories);
   const { description } = entry;
 
@@ -37,7 +39,7 @@ const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
 
   return (
     <div className="log-pane">
-      <button className="remove-button" type="button" onClick={handleClick}>
+      <button className="remove-button" onClick={handleClick}>
         X
       </button>
       <span className="log-description">
