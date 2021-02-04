@@ -22,5 +22,17 @@
   width: 30%;
 }
 
-.log-pane span {
+.serving-size {
+  display: flex;
+  align-items: center;
+  width: 25%;
+}
+
+.log-pane textarea {
+  height: 2rem;
+  width: 40%;
+  margin: 0.2rem;
+  padding: 0.4rem;
+  text-align: center;
+  resize: none;
 }

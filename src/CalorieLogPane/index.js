@@ -40,7 +40,10 @@ const CalorieLogPane = ({ entry, onDeleteClick }) => {
         <br />
         <i>{foodCategory}</i>
       </span>
-      <span>{`Serving Size: ${servingSize}`}</span>
+      <span className="serving-size">
+        Serving Size:
+        <textarea>{servingSize}</textarea>
+      </span>
       <span>{`${calories} kcal`}</span>
     </div>
   );
