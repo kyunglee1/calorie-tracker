@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
-const CalorieLogPane = ({ entry, onDeleteClick }) => {
-  const [servingSize, setServingSize] = useState('');
+const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
+  const [portionSize, setPortionSize] = useState(100);
+  const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
+  const [calorieCount, setCalorieCount] = useState(calories);
   const { description } = entry;
-  const calories =
-    entry.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 'N/A';
 
   useEffect(() => {
     fetch(
@@ -15,19 +15,24 @@ const CalorieLogPane = ({ entry, onDeleteClick }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        setServingSize(
-          data.servingSize
-            ? `${data.servingSize}${data.servingSizeUnit}`
-            : '100g'
-        );
+        setServingUnit(data.servingSizeUnit ?? 'g');
         setFoodCategory(
           data.brandedFoodCategory ?? data.foodCategory?.description
         );
       });
-  });
+  }, [entry]);
 
   const handleClick = () => {
-    onDeleteClick(entry.fdcId, calories);
+    onDeleteClick(entry.fdcId);
+  };
+
+  const handleChange = (e) => {
+    const input = e.target.value;
+    setPortionSize(input);
+
+    const newCalorieCount = Math.ceil((input / 100) * calories);
+    setCalorieCount(newCalorieCount);
+    onInputChange(entry.fdcId, newCalorieCount);
   };
 
   return (
@@ -42,9 +47,16 @@ const CalorieLogPane = ({ entry, onDeleteClick }) => {
       </span>
       <span className="serving-size">
         Serving Size:
-        <textarea>{servingSize}</textarea>
+        <input
+          type="number"
+          step="50"
+          min="0"
+          value={portionSize}
+          onChange={handleChange}
+        />
+        {servingUnit}
       </span>
-      <span>{`${calories} kcal`}</span>
+      <span>{`${calorieCount} kcal`}</span>
     </div>
   );
 };

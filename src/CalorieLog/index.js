@@ -5,37 +5,47 @@ import './index.css';
 
 const CalorieLog = ({ results, fdcId }) => {
   const [panes, setPanes] = useState([]);
-  const [totalCalories, setTotalCalories] = useState(0);
 
-  const handleDeleteClick = (id, calories) => {
-    setPanes((prevPanes) => [...prevPanes].filter((pane) => pane.id !== id));
-    setTotalCalories((prev) => prev - calories);
+  const handleDeleteClick = (id) => {
+    setPanes((prev) => [...prev].filter((pane) => pane.id !== id));
+  };
+
+  const handleInputChange = (id, calorieCount) => {
+    setPanes((prev) => {
+      const newPanes = [...prev];
+      const index = newPanes.findIndex((pane) => pane.id === id);
+      newPanes[index] = { ...newPanes[index], calories: calorieCount };
+      return newPanes;
+    });
   };
 
   // perhaps 2 separate useEffects
   useEffect(() => {
-    const isDuplicate = panes.find((pane) => pane.id === fdcId);
-    if (isDuplicate || !fdcId) return;
+    if (!fdcId) return;
 
     const item = results.find((entry) => entry.fdcId === fdcId);
-    const calories =
+    const calorieCount =
       item.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
 
-    setTotalCalories((prev) => prev + calories);
     setPanes((prev) => [
       ...prev,
       {
         id: fdcId,
+        calories: calorieCount,
         pane: (
           <CalorieLogPane
             key={fdcId}
             entry={item}
+            calories={calorieCount}
+            onInputChange={handleInputChange}
             onDeleteClick={handleDeleteClick}
           />
         ),
       },
     ]);
   }, [fdcId]);
+
+  const totalCalories = panes.reduce((total, pane) => total + pane.calories, 0);
 
   return (
     <div className="log-container">

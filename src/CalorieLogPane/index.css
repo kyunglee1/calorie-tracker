@@ -25,14 +25,14 @@
 .serving-size {
   display: flex;
   align-items: center;
-  width: 25%;
+  width: 30%;
 }
 
-.log-pane textarea {
-  height: 2rem;
+.log-pane input {
+  height: 1.6rem;
   width: 40%;
+  font-size: 1.4rem;
   margin: 0.2rem;
-  padding: 0.4rem;
+  padding: 0.2rem;
   text-align: center;
-  resize: none;
 }
