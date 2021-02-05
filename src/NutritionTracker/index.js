@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import SearchBar from '../SearchBar/index';
 import ResultsTable from '../ResultsTable/index';
 import CalorieLog from '../CalorieLog/index';
+import getUrl from '../helper/getUrl';
 import './index.css';
 
 const NutritionTracker = () => {
@@ -29,9 +30,7 @@ const NutritionTracker = () => {
 
     setClickedSearch(true);
 
-    fetch(
-      `https://api.nal.usda.gov/fdc/v1/foods/search?query=${food}&api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy&pageSize=3&pageNumber=1`
-    )
+    fetch(getUrl(food))
       .then((res) => res.json())
       .then((data) => setSearchResults(data.foods));
   };

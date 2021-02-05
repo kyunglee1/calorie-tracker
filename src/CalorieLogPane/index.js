@@ -2,6 +2,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import getUrl from '../helper/getUrl';
 import './index.css';
 
 const CalorieLogPane = (props) => {
@@ -14,9 +15,7 @@ const CalorieLogPane = (props) => {
   const calorieCount = (props.portionSize / 100) * caloriesPer100;
 
   useEffect(() => {
-    fetch(
-      `https://api.nal.usda.gov/fdc/v1/food/${props.entry.fdcId}?api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy`
-    )
+    fetch(getUrl(props.entry.fdcId))
       .then((res) => res.json())
       .then((data) => {
         setServingUnit(data.servingSizeUnit ?? 'g');

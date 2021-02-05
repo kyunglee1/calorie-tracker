@@ -6,7 +6,6 @@ const useLocalStorage = () => {
   useEffect(() => {
     const storedPanes = localStorage.getItem('panes');
     if (storedPanes) {
-      console.log(storedPanes);
       setPanes(JSON.parse(storedPanes));
     }
   }, []);
