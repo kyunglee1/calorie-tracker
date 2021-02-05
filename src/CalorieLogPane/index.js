@@ -1,19 +1,21 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
-const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
-  const [portionSize, setPortionSize] = useState(100);
+const CalorieLogPane = (props) => {
   const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
-  // Maybe get rid of bottom cus its calculable.
-  const [calorieCount, setCalorieCount] = useState(calories);
-  const { description } = entry;
+
+  const { description } = props.entry;
+  const caloriesPer100 =
+    props.entry.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
+  const calorieCount = (props.portionSize / 100) * caloriesPer100;
 
   useEffect(() => {
     fetch(
-      `https://api.nal.usda.gov/fdc/v1/food/${entry.fdcId}?api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy`
+      `https://api.nal.usda.gov/fdc/v1/food/${props.entry.fdcId}?api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -22,19 +24,16 @@ const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
           data.brandedFoodCategory ?? data.foodCategory?.description
         );
       });
-  }, [entry]);
+  }, [props.entry]);
 
   const handleClick = () => {
-    onDeleteClick(entry.fdcId);
+    props.onDeleteClick(props.entry.fdcId);
   };
 
   const handleChange = (e) => {
-    const input = e.target.value;
-    setPortionSize(input);
-
-    const newCalorieCount = Math.ceil((input / 100) * calories);
-    setCalorieCount(newCalorieCount);
-    onInputChange(entry.fdcId, newCalorieCount);
+    const portionSize = e.target.value;
+    const newCalorieCount = Math.ceil((portionSize / 100) * caloriesPer100);
+    props.onInputChange(props.entry.fdcId, newCalorieCount, portionSize);
   };
 
   return (
@@ -53,7 +52,7 @@ const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
           type="number"
           step="50"
           min="0"
-          value={portionSize}
+          value={props.portionSize}
           onChange={handleChange}
         />
         {servingUnit}
