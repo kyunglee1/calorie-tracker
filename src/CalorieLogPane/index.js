@@ -1,24 +1,23 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
-const CalorieLogPane = ({
-  entry,
-  caloriesPer100,
-  calorieCount,
-  onInputChange,
-  onDeleteClick,
-}) => {
-  const [portionSize, setPortionSize] = useState(100);
+const CalorieLogPane = (props) => {
+  // Figure out if we need the portion / 100.
+  const [portionSize, setPortionSize] = useState(props.portionSize);
   const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
 
-  const { description } = entry;
+  const { description } = props.entry;
+  const caloriesPer100 =
+    props.entry.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
+  const calorieCount = (props.portionSize / 100) * caloriesPer100;
 
   useEffect(() => {
     fetch(
-      `https://api.nal.usda.gov/fdc/v1/food/${entry.fdcId}?api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy`
+      `https://api.nal.usda.gov/fdc/v1/food/${props.entry.fdcId}?api_key=NRCvlMq3AYBkfsUzfjDzpqUD36qK5abJfLpaJfJy`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -27,10 +26,10 @@ const CalorieLogPane = ({
           data.brandedFoodCategory ?? data.foodCategory?.description
         );
       });
-  }, [entry]);
+  }, [props.entry]);
 
   const handleClick = () => {
-    onDeleteClick(entry.fdcId);
+    props.onDeleteClick(props.entry.fdcId);
   };
 
   const handleChange = (e) => {
@@ -38,7 +37,7 @@ const CalorieLogPane = ({
     setPortionSize(input);
 
     const newCalorieCount = Math.ceil((input / 100) * caloriesPer100);
-    onInputChange(entry.fdcId, newCalorieCount);
+    props.onInputChange(props.entry.fdcId, newCalorieCount, input);
   };
 
   return (

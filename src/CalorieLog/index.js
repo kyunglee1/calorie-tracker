@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import CalorieLogPane from '../CalorieLogPane/index';
+import useLocalStorage from '../hooks/useLocalStorage';
 import './index.css';
 
 const CalorieLog = ({ results, fdcId }) => {
-  const [panes, setPanes] = useState([]);
+  const [panes, setPanes] = useLocalStorage();
 
   useEffect(() => {
     if (!fdcId) return;
@@ -19,8 +20,8 @@ const CalorieLog = ({ results, fdcId }) => {
       {
         id: fdcId,
         entryItem,
-        caloriesPer100,
         calorieCount: caloriesPer100, // Current calorie count
+        portionSize: '100', // Current portion size (g/mL)
       },
     ]);
   }, [fdcId]);
@@ -32,11 +33,11 @@ const CalorieLog = ({ results, fdcId }) => {
 
   /* Handler to update an entry's calorieCount
      on portion-size change */
-  const handleInputChange = (id, calorieCount) => {
+  const handleInputChange = (id, calorieCount, portionSize) => {
     setPanes((prevPanes) => {
       const newPanes = [...prevPanes];
       const index = newPanes.findIndex((pane) => pane.id === id);
-      newPanes[index] = { ...newPanes[index], calorieCount };
+      newPanes[index] = { ...newPanes[index], calorieCount, portionSize };
       return newPanes;
     });
   };
@@ -45,8 +46,7 @@ const CalorieLog = ({ results, fdcId }) => {
     <CalorieLogPane
       key={pane.id}
       entry={pane.entryItem}
-      caloriesPer100={pane.caloriesPer100}
-      calorieCount={pane.calorieCount}
+      portionSize={pane.portionSize}
       onInputChange={handleInputChange}
       onDeleteClick={handleDeleteClick}
     />
