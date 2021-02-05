@@ -3,12 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
-const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
+const CalorieLogPane = ({
+  entry,
+  caloriesPer100,
+  calorieCount,
+  onInputChange,
+  onDeleteClick,
+}) => {
   const [portionSize, setPortionSize] = useState(100);
   const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
-  // Maybe get rid of bottom cus its calculable.
-  const [calorieCount, setCalorieCount] = useState(calories);
+
   const { description } = entry;
 
   useEffect(() => {
@@ -32,8 +37,7 @@ const CalorieLogPane = ({ entry, calories, onInputChange, onDeleteClick }) => {
     const input = e.target.value;
     setPortionSize(input);
 
-    const newCalorieCount = Math.ceil((input / 100) * calories);
-    setCalorieCount(newCalorieCount);
+    const newCalorieCount = Math.ceil((input / 100) * caloriesPer100);
     onInputChange(entry.fdcId, newCalorieCount);
   };
 
