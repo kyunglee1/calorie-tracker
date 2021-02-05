@@ -5,8 +5,6 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 
 const CalorieLogPane = (props) => {
-  // Figure out if we need the portion / 100.
-  const [portionSize, setPortionSize] = useState(props.portionSize);
   const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
 
@@ -33,11 +31,9 @@ const CalorieLogPane = (props) => {
   };
 
   const handleChange = (e) => {
-    const input = e.target.value;
-    setPortionSize(input);
-
-    const newCalorieCount = Math.ceil((input / 100) * caloriesPer100);
-    props.onInputChange(props.entry.fdcId, newCalorieCount, input);
+    const portionSize = e.target.value;
+    const newCalorieCount = Math.ceil((portionSize / 100) * caloriesPer100);
+    props.onInputChange(props.entry.fdcId, newCalorieCount, portionSize);
   };
 
   return (
@@ -56,7 +52,7 @@ const CalorieLogPane = (props) => {
           type="number"
           step="50"
           min="0"
-          value={portionSize}
+          value={props.portionSize}
           onChange={handleChange}
         />
         {servingUnit}

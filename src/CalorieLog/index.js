@@ -11,7 +11,7 @@ const CalorieLog = ({ results, fdcId }) => {
     if (!fdcId) return;
     // Find the food item among the results
     const entryItem = results.find((result) => result.fdcId === fdcId);
-    // Get the item's calories per 100 g/mL portion
+    // Food item's calories per 100 g/mL portion
     const caloriesPer100 =
       entryItem.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
 
