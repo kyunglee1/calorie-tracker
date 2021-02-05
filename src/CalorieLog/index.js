@@ -4,14 +4,17 @@ import CalorieLogPane from '../CalorieLogPane/index';
 import useLocalStorage from '../hooks/useLocalStorage';
 import './index.css';
 
-const CalorieLog = ({ results, fdcId }) => {
+const CalorieLog = ({ results, fdcId, clickedAdd }) => {
   const [panes, setPanes] = useLocalStorage();
 
   useEffect(() => {
-    if (!fdcId) return;
-    // Find the food item among the results
+    const isDuplicate = panes.find((pane) => pane.id === fdcId);
+
+    if (isDuplicate || !fdcId) return;
+
+    // Item that user selected
     const entryItem = results.find((result) => result.fdcId === fdcId);
-    // Food item's calories per 100 g/mL portion
+    // Item's calories per 100 g/mL portion
     const caloriesPer100 =
       entryItem.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
 
@@ -24,7 +27,7 @@ const CalorieLog = ({ results, fdcId }) => {
         portionSize: '100', // Current portion size (g/mL)
       },
     ]);
-  }, [fdcId]);
+  }, [clickedAdd]);
 
   // Handler to remove entry by id
   const handleDeleteClick = (id) => {
