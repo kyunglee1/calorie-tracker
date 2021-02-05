@@ -56,7 +56,7 @@ const CalorieLogPane = (props) => {
         />
         {servingUnit}
       </span>
-      <span>{`${calorieCount} kcal`}</span>
+      <span className="calorie-count">{`${calorieCount} kcal`}</span>
     </div>
   );
 };
