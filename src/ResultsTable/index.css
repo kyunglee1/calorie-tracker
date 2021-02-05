@@ -22,3 +22,7 @@
   border-bottom: thin solid black;
   background-color: rgb(255, 248, 183);
 }
+
+.results-table tr:hover {
+  background-color: rgb(255, 253, 134);
+}
