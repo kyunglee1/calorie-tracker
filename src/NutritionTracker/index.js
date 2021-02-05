@@ -11,9 +11,7 @@ const NutritionTracker = () => {
   const [clickedSearch, setClickedSearch] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [fdcId, setFdcId] = useState('');
-  // CalorieLog should run on AddClick. Add state for
-  // that so that you could pass it to Log, on AddClick
-  // run useEffect is the idea.
+  const [toggle, setToggle] = useState(false);
   // useReducer
 
   const handleInputChange = (e) => {
@@ -39,6 +37,7 @@ const NutritionTracker = () => {
     setClickedSearch(false);
     setFood('');
     setFdcId(id);
+    setToggle((prevToggle) => !prevToggle);
   };
 
   return (
@@ -54,7 +53,7 @@ const NutritionTracker = () => {
         )}
       </div>
       <div className="right-view">
-        <CalorieLog results={searchResults} fdcId={fdcId} />
+        <CalorieLog results={searchResults} fdcId={fdcId} clickedAdd={toggle} />
       </div>
     </div>
   );
