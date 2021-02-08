@@ -36,7 +36,7 @@ const CalorieLogPane = (props) => {
   };
 
   return (
-    <div className="log-pane">
+    <div className={`log-pane ${props.paneType}`}>
       <button className="remove-button" onClick={handleClick}>
         X
       </button>

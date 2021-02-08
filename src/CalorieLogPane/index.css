@@ -9,6 +9,10 @@
   background-color: rgb(245, 211, 167);
 }
 
+.duplicate {
+  background-color: yellowgreen;
+}
+
 .remove-button {
   border-radius: 0.5rem;
   background-color: rgb(240, 62, 62);

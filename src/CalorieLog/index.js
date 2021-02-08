@@ -7,6 +7,7 @@ import './index.css';
 const CalorieLog = ({ results, fdcId, clickedAdd }) => {
   const [panes, setPanes] = useLocalStorage();
 
+  // Save calorie-log entry to panes
   useEffect(() => {
     const isDuplicate = panes.find((pane) => pane.id === fdcId);
 
@@ -27,6 +28,30 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
         portionSize: '100', // Current portion size (g/mL)
       },
     ]);
+  }, [clickedAdd]);
+
+  // Indicate (blink) pre-existing log entry
+  useEffect(() => {
+    const duplicate = panes.find((pane) => pane.id === fdcId);
+
+    if (!duplicate) return;
+
+    /* Add className to pre-existing pane, which
+       will be passed as props later */
+    setPanes((prevPanes) => {
+      const newPanes = [...prevPanes];
+      const index = newPanes.indexOf(duplicate);
+      newPanes[index] = { ...newPanes[index], type: 'duplicate' };
+      return newPanes;
+    });
+    setTimeout(() => {
+      setPanes((prevPanes) => {
+        const newPanes = [...prevPanes];
+        const index = newPanes.findIndex((pane) => pane.id === fdcId);
+        newPanes[index] = { ...newPanes[index], type: '' };
+        return newPanes;
+      });
+    }, 500);
   }, [clickedAdd]);
 
   // Handler to remove entry by id
@@ -52,6 +77,7 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
       portionSize={pane.portionSize}
       onInputChange={handleInputChange}
       onDeleteClick={handleDeleteClick}
+      paneType={pane.type}
     />
   ));
 
