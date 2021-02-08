@@ -10,7 +10,12 @@
 }
 
 .duplicate {
-  background-color: yellowgreen;
+  background-color: white;
+}
+
+.log-pane,
+.duplicate {
+  transition: background-color 1s ease-out;
 }
 
 .remove-button {

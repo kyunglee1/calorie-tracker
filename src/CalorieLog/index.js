@@ -36,14 +36,15 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
 
     if (!duplicate) return;
 
-    /* Add className to pre-existing pane, which
-       will be passed as props later */
+    /* Add type: 'duplicate' to pre-existing pane, to
+       be passed as a prop. */
     setPanes((prevPanes) => {
       const newPanes = [...prevPanes];
       const index = newPanes.indexOf(duplicate);
       newPanes[index] = { ...newPanes[index], type: 'duplicate' };
       return newPanes;
     });
+    // Remove type: 'duplicate' after 500 ms
     setTimeout(() => {
       setPanes((prevPanes) => {
         const newPanes = [...prevPanes];
@@ -60,7 +61,7 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
   };
 
   /* Handler to update an entry's calorieCount
-     on portion-size change */
+     on portion-size change. */
   const handleInputChange = (id, calorieCount, portionSize) => {
     setPanes((prevPanes) => {
       const newPanes = [...prevPanes];
