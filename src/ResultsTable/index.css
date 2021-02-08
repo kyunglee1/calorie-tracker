@@ -4,14 +4,25 @@
   background-color: white;
   text-align: center;
   border: thin solid black;
+  border-radius: 2rem;
+  border-spacing: 0;
+  overflow: hidden;
   font-size: 1.6rem;
 }
 
 .results-table td {
   border-bottom: thin solid black;
+  text-align: center;
+  padding: 1rem;
 }
 
 .results-table th {
+  height: 4rem;
+  font-size: 1.8rem;
   border-bottom: thin solid black;
   background-color: rgb(255, 248, 183);
+}
+
+.results-table tr:hover {
+  background-color: rgb(255, 253, 134);
 }
