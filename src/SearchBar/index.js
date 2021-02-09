@@ -9,6 +9,7 @@ const SearchBar = ({ inputText, onInputChange }) => (
       type="text"
       value={inputText}
       onChange={onInputChange}
+      placeholder="Search for food.."
     />
   </div>
 );
