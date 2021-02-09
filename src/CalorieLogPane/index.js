@@ -32,6 +32,7 @@ const CalorieLogPane = (props) => {
   const handleChange = (e) => {
     const portionSize = e.target.value;
     const newCalorieCount = Math.ceil((portionSize / 100) * caloriesPer100);
+
     props.onInputChange(props.entry.fdcId, newCalorieCount, portionSize);
   };
 

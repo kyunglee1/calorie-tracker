@@ -26,3 +26,7 @@
 .results-table tr:hover {
   background-color: rgb(255, 253, 134);
 }
+
+#no-results:hover {
+  background-color: white;
+}

@@ -1,0 +1,16 @@
+/* Returns a wrapper which debounces 'func'
+   by 'delay' ms. */
+
+const debounce = (func, delay) => {
+  let timerId;
+
+  return (...args) => {
+    clearTimeout(timerId);
+
+    timerId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+};
+
+export default debounce;
