@@ -50,6 +50,7 @@ const NutritionTracker = () => {
 
   return (
     <div className="container">
+      <span className="header">Calorie Tracker</span>
       <div className="left-view">
         <SearchBar inputText={food} onInputChange={handleInputChange} />
         {showResults && (

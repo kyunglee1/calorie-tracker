@@ -89,7 +89,7 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
 
   return (
     <div className="log-container">
-      <div id="log-header">Calorie Log</div>
+      <div id="log-header">CALORIE LOG</div>
       <div className="panes">{panesList}</div>
       {panes.length > 0 && (
         <div id="log-footer">
