@@ -1,9 +1,10 @@
 /* eslint-disable no-useless-return */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import SearchBar from '../SearchBar/index';
 import ResultsTable from '../ResultsTable/index';
 import CalorieLog from '../CalorieLog/index';
 import getUrl from '../helper/getUrl';
+import debounce from '../helper/debounce';
 import './index.css';
 
 const NutritionTracker = () => {
@@ -14,23 +15,40 @@ const NutritionTracker = () => {
   const [toggle, setToggle] = useState(false);
   // useReducer
 
-  const handleInputChange = (e) => {
-    const input = e.target.value;
-    setFood(input);
-    setClickedSearch(false);
-  };
-
   const handleSearchClick = () => {
     const input = food.trim();
-    if (!input) {
-      return;
-    }
+    if (!input) return;
 
     setClickedSearch(true);
 
     fetch(getUrl(food))
       .then((res) => res.json())
       .then((data) => setSearchResults(data.foods));
+  };
+
+  const fetchData = (food2) => {
+    const input = food2.trim();
+    if (!input) return;
+
+    setClickedSearch(true);
+
+    fetch(getUrl(food2))
+      .then((res) => res.json())
+      .then((data) => setSearchResults(data.foods));
+  };
+
+  const debouncedFetch = useCallback(
+    debounce((food3) => fetchData(food3), 1500),
+    []
+  );
+
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    setFood(input);
+    setClickedSearch(false);
+
+    // Debounce
+    debouncedFetch(input);
   };
 
   const handleAddClick = (id) => {
