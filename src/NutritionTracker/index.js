@@ -26,19 +26,19 @@ const NutritionTracker = () => {
       .then((data) => setSearchResults(data.foods));
   };
 
-  const fetchData = (food2) => {
-    const input = food2.trim();
-    if (!input) return;
+  const fetchData = (input) => {
+    const foodItem = input.trim();
+    if (!foodItem) return;
 
     setClickedSearch(true);
 
-    fetch(getUrl(food2))
+    fetch(getUrl(foodItem))
       .then((res) => res.json())
       .then((data) => setSearchResults(data.foods));
   };
 
   const debouncedFetch = useCallback(
-    debounce((food3) => fetchData(food3), 1500),
+    debounce((input) => fetchData(input), 1500),
     []
   );
 

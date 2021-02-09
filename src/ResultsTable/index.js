@@ -8,6 +8,14 @@ const ResultsTable = ({ results, onAddClick }) => {
     <ResultRow key={result.fdcId} data={result} onRowClick={onAddClick} />
   ));
 
+  if (results.length === 0) {
+    rows.push(
+      <tr id="no-results">
+        <td colSpan="3">N/A</td>
+      </tr>
+    );
+  }
+
   return (
     <table className="results-table">
       <thead>

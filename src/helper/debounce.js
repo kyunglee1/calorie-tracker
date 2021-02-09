@@ -1,3 +1,6 @@
+/* Returns a wrapper which debounces 'func'
+   by 'delay' ms. */
+
 const debounce = (func, delay) => {
   let timerId;
 
