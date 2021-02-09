@@ -33,14 +33,16 @@
 
 .serving-size {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  width: 30%;
+  width: 35%;
   text-align: right;
 }
 
 .serving-size input {
   height: 1.6rem;
   width: 4rem;
+  min-width: 35px;
   font-size: 1.4rem;
   margin-left: 1rem;
   margin-right: 0.2rem;

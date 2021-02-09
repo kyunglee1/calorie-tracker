@@ -9,22 +9,11 @@ import './index.css';
 
 const NutritionTracker = () => {
   const [food, setFood] = useState('');
-  const [clickedSearch, setClickedSearch] = useState(false);
+  const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [fdcId, setFdcId] = useState('');
   const [toggle, setToggle] = useState(false);
   // useReducer
-
-  const handleSearchClick = () => {
-    const input = food.trim();
-    if (!input) return;
-
-    setClickedSearch(true);
-
-    fetch(getUrl(food))
-      .then((res) => res.json())
-      .then((data) => setSearchResults(data.foods));
-  };
 
   const fetchData = (input) => {
     const foodItem = input.trim();
@@ -34,7 +23,7 @@ const NutritionTracker = () => {
       .then((res) => res.json())
       .then((data) => {
         setSearchResults(data.foods);
-        setClickedSearch(true);
+        setShowResults(true);
       });
   };
 
@@ -46,14 +35,14 @@ const NutritionTracker = () => {
   const handleInputChange = (e) => {
     const input = e.target.value;
     setFood(input);
-    setClickedSearch(false);
+    setShowResults(false);
 
     // Debounce
     debouncedFetch(input);
   };
 
   const handleAddClick = (id) => {
-    setClickedSearch(false);
+    setShowResults(false);
     setFood('');
     setFdcId(id);
     setToggle((prevToggle) => !prevToggle);
@@ -62,12 +51,8 @@ const NutritionTracker = () => {
   return (
     <div className="container">
       <div className="left-view">
-        <SearchBar
-          inputText={food}
-          onInputChange={handleInputChange}
-          onSearchClick={handleSearchClick}
-        />
-        {clickedSearch && (
+        <SearchBar inputText={food} onInputChange={handleInputChange} />
+        {showResults && (
           <ResultsTable results={searchResults} onAddClick={handleAddClick} />
         )}
       </div>

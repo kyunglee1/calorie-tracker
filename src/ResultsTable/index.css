@@ -23,6 +23,14 @@
   background-color: rgb(255, 248, 183);
 }
 
+.results-table tr td:nth-child(1) {
+  width: 40%;
+}
+
+.results-table tr td:nth-child(2) {
+  width: 35%;
+}
+
 .results-table tr:hover {
   background-color: rgb(255, 253, 134);
 }
