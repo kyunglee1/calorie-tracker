@@ -30,11 +30,12 @@ const NutritionTracker = () => {
     const foodItem = input.trim();
     if (!foodItem) return;
 
-    setClickedSearch(true);
-
     fetch(getUrl(foodItem))
       .then((res) => res.json())
-      .then((data) => setSearchResults(data.foods));
+      .then((data) => {
+        setSearchResults(data.foods);
+        setClickedSearch(true);
+      });
   };
 
   const debouncedFetch = useCallback(
