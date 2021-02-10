@@ -7,7 +7,7 @@ import getUrl from '../helper/getUrl';
 import debounce from '../helper/debounce';
 import './index.css';
 
-const NutritionTracker = () => {
+const CalorieTracker = () => {
   // Search-input value
   const [food, setFood] = useState('');
 
@@ -38,7 +38,7 @@ const NutritionTracker = () => {
 
   // Memoize and debounce fetchData function
   const debouncedFetch = useCallback(
-    debounce((input) => fetchData(input), 1500),
+    debounce((input) => fetchData(input), 1000),
     []
   );
 
@@ -79,4 +79,4 @@ const NutritionTracker = () => {
   );
 };
 
-export default NutritionTracker;
+export default CalorieTracker;

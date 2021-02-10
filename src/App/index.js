@@ -1,8 +1,8 @@
 /* eslint-disable arrow-body-style */
 import React from 'react';
-import NutritionTracker from '../NutritionTracker/index';
+import CalorieTracker from '../CalorieTracker/index';
 import './index.css';
 
-const App = () => <NutritionTracker />;
+const App = () => <CalorieTracker />;
 
 export default App;
