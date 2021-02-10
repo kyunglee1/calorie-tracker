@@ -11,8 +11,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(48, 47, 47);
-  border-bottom: 3px double white;
+  background-color: rgb(221, 150, 103);
+  border-bottom: 5px double white;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 4rem;
   color: white;

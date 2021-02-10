@@ -1,3 +1,7 @@
+/* Returns a URL, given searchQuery that is either:
+    - a string, e.g. 'broccoli', for a list of search results
+    - a number, e.g. '42115', for details on a particular result */
+
 const getUrl = (searchQuery) => {
   const url =
     typeof searchQuery === 'string'

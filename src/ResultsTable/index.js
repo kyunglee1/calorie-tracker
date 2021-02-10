@@ -8,6 +8,9 @@ const ResultsTable = ({ results, onAddClick }) => {
     <ResultRow key={result.fdcId} data={result} onRowClick={onAddClick} />
   ));
 
+  /* Results are empty if input does not 
+     match any database item.
+      e.g. 'abcd123' */
   if (results.length === 0) {
     rows.push(
       <tr id="no-results">

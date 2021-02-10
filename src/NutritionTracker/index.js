@@ -8,13 +8,22 @@ import debounce from '../helper/debounce';
 import './index.css';
 
 const NutritionTracker = () => {
+  // Search-input value
   const [food, setFood] = useState('');
+
+  // Boolean to display search results
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [fdcId, setFdcId] = useState('');
-  const [toggle, setToggle] = useState(false);
-  // useReducer
 
+  /* USDA fdcId for the user-selected result. Will be
+     used to fetch data. */
+  const [fdcId, setFdcId] = useState('');
+
+  /* Toggled whenever user selects a result to be entered
+     into calorie log. */
+  const [toggle, setToggle] = useState(false);
+
+  // Fetch data given input food item
   const fetchData = (input) => {
     const foodItem = input.trim();
     if (!foodItem) return;
@@ -27,6 +36,7 @@ const NutritionTracker = () => {
       });
   };
 
+  // Memoize and debounce fetchData function
   const debouncedFetch = useCallback(
     debounce((input) => fetchData(input), 1500),
     []
@@ -35,14 +45,19 @@ const NutritionTracker = () => {
   const handleInputChange = (e) => {
     const input = e.target.value;
     setFood(input);
+
+    // Hide results when input changes
     setShowResults(false);
 
-    // Debounce
+    // Enqueue data-fetch for new input
     debouncedFetch(input);
   };
 
+  /* Handler for when user selects a result.
+     fdcId (id) of the result is passed in. */
   const handleAddClick = (id) => {
     setShowResults(false);
+    // Clear the search-input value
     setFood('');
     setFdcId(id);
     setToggle((prevToggle) => !prevToggle);
@@ -50,7 +65,7 @@ const NutritionTracker = () => {
 
   return (
     <div className="container">
-      <span className="header">Calorie Tracker</span>
+      <div className="header">CALORIE * TRACKER</div>
       <div className="left-view">
         <SearchBar inputText={food} onInputChange={handleInputChange} />
         {showResults && (
