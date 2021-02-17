@@ -3,8 +3,8 @@ import React, { useCallback, useState } from 'react';
 import SearchBar from '../SearchBar/index';
 import ResultsTable from '../ResultsTable/index';
 import CalorieLog from '../CalorieLog/index';
-import getUrl from '../helper/getUrl';
-import debounce from '../helper/debounce';
+import getUrl from '../../helper/getUrl';
+import debounce from '../../helper/debounce';
 import './index.css';
 
 const CalorieTracker = () => {
