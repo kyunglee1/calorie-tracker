@@ -1,7 +1,15 @@
-import { RESULTS_LOADED } from '../actions/types';
+import {
+  RESULTS_LOADED,
+  ADD_PANE,
+  REMOVE_PANE,
+  UPDATE_PANE,
+  SIGNAL_DUPLICATE,
+  END_SIGNAL,
+} from '../actions/types';
 
 const initialState = {
   searchResults: [],
+  panes: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -10,6 +18,48 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchResults: action.payload,
+      };
+
+    case ADD_PANE:
+      return {
+        ...state,
+        panes: [...state.panes, action.payload],
+      };
+
+    case REMOVE_PANE:
+      return {
+        ...state,
+        panes: state.panes.filter((pane) => pane.fdcId !== action.payload),
+      };
+
+    case UPDATE_PANE:
+      return {
+        ...state,
+        panes: state.panes.map((pane) =>
+          pane.fdcId === action.payload.fdcId
+            ? {
+                ...pane,
+                calorieCount: action.payload.calorieCount,
+                portionSize: action.payload.portionSize,
+              }
+            : pane
+        ),
+      };
+
+    case SIGNAL_DUPLICATE:
+      return {
+        ...state,
+        panes: state.panes.map((pane) =>
+          pane.fdcId === action.payload ? { ...pane, type: 'duplicate' } : pane
+        ),
+      };
+
+    case END_SIGNAL:
+      return {
+        ...state,
+        panes: state.panes.map((pane) =>
+          pane.fdcId === action.payload ? { ...pane, type: '' } : pane
+        ),
       };
 
     default:
