@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import CalorieLogPane from '../CalorieLogPane/index';
-import useLocalStorage from '../hooks/useLocalStorage';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import './index.css';
 
 const CalorieLog = ({ results, fdcId, clickedAdd }) => {
