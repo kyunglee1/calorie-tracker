@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import ResultRow from '../ResultRow/index';
 import './index.css';
 
 const ResultsTable = ({ results, onAddClick }) => {
+  // Map each result to a table row
   const rows = results.map((result) => (
     <ResultRow key={result.fdcId} data={result} onRowClick={onAddClick} />
   ));
@@ -33,4 +35,8 @@ const ResultsTable = ({ results, onAddClick }) => {
   );
 };
 
-export default ResultsTable;
+const mapStateToProps = (state) => ({
+  results: state.searchResults,
+});
+
+export default connect(mapStateToProps)(ResultsTable);

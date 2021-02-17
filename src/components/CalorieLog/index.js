@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import CalorieLogPane from '../CalorieLogPane/index';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import './index.css';
@@ -102,4 +103,8 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
   );
 };
 
-export default CalorieLog;
+const mapStateToProps = (state) => ({
+  results: state.searchResults,
+});
+
+export default connect(mapStateToProps)(CalorieLog);
