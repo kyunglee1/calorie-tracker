@@ -15,7 +15,7 @@ const ResultsTable = ({ results, onAddClick }) => {
       e.g. 'abcd123' */
   if (results.length === 0) {
     rows.push(
-      <tr id="no-results">
+      <tr key="0" id="no-results">
         <td colSpan="3">N/A</td>
       </tr>
     );
