@@ -24,20 +24,6 @@ const CalorieTracker = (props) => {
      into calorie log. */
   const [toggle, setToggle] = useState(false);
 
-  // Fetch data given input food item
-
-  // const fetchData = (input) => {
-  //   const foodItem = input.trim();
-  //   if (!foodItem) return;
-
-  //   fetch(getUrl(foodItem))
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setSearchResults(data.foods);
-  //       setShowResults(true);
-  //     });
-  // };
-
   // Memoize and debounce fetchData action creator
   const debouncedFetch = useCallback(
     debounce((input) => {

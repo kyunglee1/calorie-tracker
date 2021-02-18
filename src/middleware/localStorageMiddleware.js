@@ -12,7 +12,10 @@ const localStorageMiddleware = (storeAPI) => (next) => (action) => {
 
   // Store updated panes into localStorage
   if (isPaneAction) {
-    localStorage.setItem('panes', JSON.stringify(storeAPI.getState().panes));
+    localStorage.setItem(
+      'panes',
+      JSON.stringify(storeAPI.getState().calorieLog.panes)
+    );
   }
 
   return result;

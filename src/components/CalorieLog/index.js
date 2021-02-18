@@ -70,8 +70,8 @@ const CalorieLog = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  results: state.searchResults,
-  panes: state.panes,
+  results: state.results.searchResults,
+  panes: state.calorieLog.panes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
