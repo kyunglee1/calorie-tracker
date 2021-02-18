@@ -7,9 +7,16 @@ import {
   END_SIGNAL,
 } from '../actions/types';
 
+let panes = [];
+const storedPanes = localStorage.getItem('panes');
+
+if (storedPanes) {
+  panes = JSON.parse(storedPanes);
+}
+
 const initialState = {
   searchResults: [],
-  panes: [],
+  panes,
 };
 
 const rootReducer = (state = initialState, action) => {
