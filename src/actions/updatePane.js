@@ -1,9 +1,9 @@
 import { UPDATE_PANE } from './types';
 
-const updatePane = (id, calorieCount, portionSize) => ({
+const updatePane = (fdcId, calorieCount, portionSize) => ({
   type: UPDATE_PANE,
   payload: {
-    fdcId: id,
+    fdcId,
     calorieCount,
     portionSize,
   },

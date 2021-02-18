@@ -2,7 +2,7 @@ import { RESULTS_LOADED } from './types';
 import getUrl from '../helper/getUrl';
 
 /* Action creator that performs async fetch.
-   Given food-item search query, fetch related 
+   Given search query, fetch related 
    results and dispatch to Redux store. */
 
 const fetchData = (searchQuery) => (dispatch) => {

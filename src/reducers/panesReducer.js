@@ -7,6 +7,8 @@ import {
 } from '../actions/types';
 
 let panes = [];
+
+// Load panes from localStorage if present
 const storedPanes = localStorage.getItem('panes');
 
 if (storedPanes) {

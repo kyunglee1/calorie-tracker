@@ -21,7 +21,7 @@ const CalorieLog = (props) => {
 
     // Result that user had selected
     const data = props.results.find((result) => result.fdcId === fdcId);
-    // Item's calories per 100 g/mL portion
+    // Item's calories per 100 g, or mL, portion
     const caloriesPer100 =
       data.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
 
