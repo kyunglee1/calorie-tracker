@@ -1,91 +1,57 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import addPane from '../../actions/addPane';
+import signalDuplicate from '../../actions/signalDuplicate';
+import endSignal from '../../actions/endSignal';
 import CalorieLogPane from '../CalorieLogPane/index';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import './index.css';
 
-const CalorieLog = ({ results, fdcId, clickedAdd }) => {
-  const [panes, setPanes] = useLocalStorage();
+const CalorieLog = (props) => {
+  // Food-item entry's unique id
+  const { fdcId } = props;
 
-  // Save food-item entry to panes
+  // Save food-item entry
   useEffect(() => {
-    const isDuplicate = panes.find((pane) => pane.fdcId === fdcId);
+    const isDuplicate = props.panes.find((pane) => pane.fdcId === fdcId);
 
     // Duplicates not allowed. Also, skip inital-render effect.
     if (isDuplicate || !fdcId) return;
 
-    // Item that user has selected from search results
-    const entryItem = results.find((result) => result.fdcId === fdcId);
+    // Result that user had selected
+    const data = props.results.find((result) => result.fdcId === fdcId);
     // Item's calories per 100 g/mL portion
     const caloriesPer100 =
-      entryItem.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
+      data.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
 
-    setPanes((prevPanes) => [
-      ...prevPanes,
-      {
-        fdcId,
-        entryItem,
-        calorieCount: caloriesPer100, // Current calorie count
-        portionSize: '100', // Current portion size (g/mL)
-      },
-    ]);
-  }, [clickedAdd]);
+    // Dispatch action to add pane to Redux store
+    props.addPane({
+      fdcId,
+      data,
+      calorieCount: caloriesPer100, // Current calorie count
+      portionSize: '100', // Current portion size (g/mL)
+    });
+  }, [props.clickedAdd]);
 
   // Indicate (blink) duplicate log-entry
   useEffect(() => {
-    const duplicate = panes.find((pane) => pane.fdcId === fdcId);
+    const duplicate = props.panes.find((pane) => pane.fdcId === fdcId);
 
     if (!duplicate) return;
 
-    /* Add (type: 'duplicate') to pre-existing pane object, to
-       be passed as a prop. */
-    setPanes((prevPanes) => {
-      const newPanes = [...prevPanes];
-      const index = newPanes.indexOf(duplicate);
-      newPanes[index] = { ...newPanes[index], type: 'duplicate' };
-      return newPanes;
-    });
+    // Dispatch action to store signaling duplicate entry
+    props.signalDuplicate(fdcId);
 
-    // Remove type: 'duplicate' after at least 500ms delay
-    setTimeout(() => {
-      setPanes((prevPanes) => {
-        const newPanes = [...prevPanes];
-        const index = newPanes.findIndex((pane) => pane.fdcId === fdcId);
-        newPanes[index] = { ...newPanes[index], type: '' };
-        return newPanes;
-      });
-    }, 500);
-  }, [clickedAdd]);
+    // Dispatch action to store signaling end of visual effect (blink)
+    setTimeout(() => props.endSignal(fdcId), 500);
+  }, [props.clickedAdd]);
 
-  // Handler to remove entry by fdcId (id)
-  const handleDeleteClick = (id) => {
-    setPanes((prevPanes) => [...prevPanes].filter((pane) => pane.fdcId !== id));
-  };
-
-  /* Handler to update an entry's calorieCount
-     on portion-size change. */
-  const handleInputChange = (id, calorieCount, portionSize) => {
-    setPanes((prevPanes) => {
-      const newPanes = [...prevPanes];
-      const index = newPanes.findIndex((pane) => pane.fdcId === id);
-      newPanes[index] = { ...newPanes[index], calorieCount, portionSize };
-      return newPanes;
-    });
-  };
-
-  const panesList = panes.map((pane) => (
-    <CalorieLogPane
-      key={pane.fdcId}
-      entry={pane.entryItem}
-      portionSize={pane.portionSize}
-      onInputChange={handleInputChange}
-      onDeleteClick={handleDeleteClick}
-      paneType={pane.type}
-    />
+  const panesList = props.panes.map((pane) => (
+    <CalorieLogPane key={pane.fdcId} id={pane.fdcId} />
   ));
 
-  const totalCalories = panes.reduce(
+  const totalCalories = props.panes.reduce(
     (total, pane) => total + pane.calorieCount,
     0
   );
@@ -94,7 +60,7 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
     <div className="log-container">
       <div id="log-header">CALORIE LOG</div>
       <div className="panes">{panesList}</div>
-      {panes.length > 0 && (
+      {props.panes.length > 0 && (
         <div id="log-footer">
           <span>{`Total: ${totalCalories} kcal`}</span>
         </div>
@@ -105,6 +71,13 @@ const CalorieLog = ({ results, fdcId, clickedAdd }) => {
 
 const mapStateToProps = (state) => ({
   results: state.searchResults,
+  panes: state.panes,
 });
 
-export default connect(mapStateToProps)(CalorieLog);
+const mapDispatchToProps = (dispatch) => ({
+  addPane: (pane) => dispatch(addPane(pane)),
+  signalDuplicate: (id) => dispatch(signalDuplicate(id)),
+  endSignal: (id) => dispatch(endSignal(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalorieLog);
