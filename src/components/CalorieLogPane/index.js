@@ -82,7 +82,7 @@ const CalorieLogPane = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  panes: state.panes,
+  panes: state.calorieLog.panes,
 });
 
 const mapDispatchToProps = (dispatch) => ({

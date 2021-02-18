@@ -36,7 +36,7 @@ const ResultsTable = ({ results, onAddClick }) => {
 };
 
 const mapStateToProps = (state) => ({
-  results: state.searchResults,
+  results: state.results.searchResults,
 });
 
 export default connect(mapStateToProps)(ResultsTable);
