@@ -2,6 +2,9 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import updatePane from '../../actions/updatePane';
+import removePane from '../../actions/removePane';
 import getUrl from '../../helper/getUrl';
 import './index.css';
 
@@ -10,19 +13,21 @@ const CalorieLogPane = (props) => {
   const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
 
+  const item = props.panes.find((pane) => pane.fdcId === props.id);
+
   // Food item's description/name
-  const { description } = props.entry;
+  const { description } = item.data;
 
   // Food item's calories per 100 g or mL
   const caloriesPer100 =
-    props.entry.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
+    item.data.foodNutrients.find((x) => x.nutrientId === 1008)?.value ?? 0;
 
-  // Food item's calories respective to its  current portion size
-  const calorieCount = (props.portionSize / 100) * caloriesPer100;
+  // Food item's calories respective to its current portion size
+  const calorieCount = (item.portionSize / 100) * caloriesPer100;
 
   // Fetch serving size unit & food category
   useEffect(() => {
-    fetch(getUrl(props.entry.fdcId))
+    fetch(getUrl(item.data.fdcId))
       .then((res) => res.json())
       .then((data) => {
         // Default unit = grams
@@ -32,10 +37,10 @@ const CalorieLogPane = (props) => {
           data.brandedFoodCategory ?? data.foodCategory?.description
         );
       });
-  }, [props.entry]);
+  }, [item.data.fdcId]);
 
   const handleClick = () => {
-    props.onDeleteClick(props.entry.fdcId);
+    props.removePane(item.data.fdcId);
   };
 
   /* Handler for 'serving-size' input change. Updates
@@ -44,11 +49,11 @@ const CalorieLogPane = (props) => {
     const portionSize = e.target.value;
     const newCalorieCount = Math.ceil((portionSize / 100) * caloriesPer100);
 
-    props.onInputChange(props.entry.fdcId, newCalorieCount, portionSize);
+    props.updatePane(item.data.fdcId, newCalorieCount, portionSize);
   };
 
   return (
-    <div className={`log-pane ${props.paneType}`}>
+    <div className={`log-pane ${item.type}`}>
       <button className="remove-button" onClick={handleClick}>
         X
       </button>
@@ -63,7 +68,7 @@ const CalorieLogPane = (props) => {
           type="number"
           step="50"
           min="0"
-          value={props.portionSize}
+          value={item.portionSize}
           onChange={handleChange}
         />
         {servingUnit}
@@ -73,4 +78,15 @@ const CalorieLogPane = (props) => {
   );
 };
 
-export default CalorieLogPane;
+const mapStateToProps = (state) => ({
+  panes: state.panes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  // maybe use args?
+  updatePane: (id, calorieCount, portionSize) =>
+    dispatch(updatePane(id, calorieCount, portionSize)),
+  removePane: (id) => dispatch(removePane(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalorieLogPane);
