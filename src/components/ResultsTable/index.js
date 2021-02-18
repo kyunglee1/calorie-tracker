@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import ResultRow from '../ResultRow/index';
 import './index.css';
 
 const ResultsTable = ({ results, onAddClick }) => {
+  // Map each result to a table row
   const rows = results.map((result) => (
     <ResultRow key={result.fdcId} data={result} onRowClick={onAddClick} />
   ));
@@ -13,7 +15,7 @@ const ResultsTable = ({ results, onAddClick }) => {
       e.g. 'abcd123' */
   if (results.length === 0) {
     rows.push(
-      <tr id="no-results">
+      <tr key="0" id="no-results">
         <td colSpan="3">N/A</td>
       </tr>
     );
@@ -33,4 +35,8 @@ const ResultsTable = ({ results, onAddClick }) => {
   );
 };
 
-export default ResultsTable;
+const mapStateToProps = (state) => ({
+  results: state.results.searchResults,
+});
+
+export default connect(mapStateToProps)(ResultsTable);
