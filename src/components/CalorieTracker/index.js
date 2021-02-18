@@ -41,6 +41,9 @@ const CalorieTracker = (props) => {
   // Memoize and debounce fetchData action creator
   const debouncedFetch = useCallback(
     debounce((input) => {
+      const foodItem = input.trim();
+      if (!foodItem) return;
+
       props.fetchData(input);
       setShowResults(true);
     }, 1000),
