@@ -36,9 +36,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         panes: state.panes.map((pane) =>
+          // Find target pane to update
           pane.fdcId === action.payload.fdcId
             ? {
                 ...pane,
+                // Update the fields below
                 calorieCount: action.payload.calorieCount,
                 portionSize: action.payload.portionSize,
               }
@@ -49,6 +51,7 @@ const rootReducer = (state = initialState, action) => {
     case SIGNAL_DUPLICATE:
       return {
         ...state,
+        // Add type: 'duplicate' to pre-existing pane to trigger blink-effect
         panes: state.panes.map((pane) =>
           pane.fdcId === action.payload ? { ...pane, type: 'duplicate' } : pane
         ),
@@ -57,6 +60,7 @@ const rootReducer = (state = initialState, action) => {
     case END_SIGNAL:
       return {
         ...state,
+        // Remove type: 'duplicate' to pre-existing pane to end blink-effect
         panes: state.panes.map((pane) =>
           pane.fdcId === action.payload ? { ...pane, type: '' } : pane
         ),

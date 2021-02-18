@@ -9,10 +9,11 @@ import getUrl from '../../helper/getUrl';
 import './index.css';
 
 const CalorieLogPane = (props) => {
-  // Food item's serving size unit (g/mL)
+  // Food item's serving size unit - (g) or (mL)
   const [servingUnit, setServingUnit] = useState('');
   const [foodCategory, setFoodCategory] = useState('');
 
+  // Find food-item among stored items
   const item = props.panes.find((pane) => pane.fdcId === props.id);
 
   // Food item's description/name
@@ -25,7 +26,7 @@ const CalorieLogPane = (props) => {
   // Food item's calories respective to its current portion size
   const calorieCount = (item.portionSize / 100) * caloriesPer100;
 
-  // Fetch serving size unit & food category
+  // Fetch and save serving size unit & food category
   useEffect(() => {
     fetch(getUrl(item.data.fdcId))
       .then((res) => res.json())
@@ -40,6 +41,7 @@ const CalorieLogPane = (props) => {
   }, [item.data.fdcId]);
 
   const handleClick = () => {
+    // Dispatch action to store to remove pane
     props.removePane(item.data.fdcId);
   };
 
@@ -49,6 +51,7 @@ const CalorieLogPane = (props) => {
     const portionSize = e.target.value;
     const newCalorieCount = Math.ceil((portionSize / 100) * caloriesPer100);
 
+    // Dispatch action to store to update pane
     props.updatePane(item.data.fdcId, newCalorieCount, portionSize);
   };
 
@@ -83,9 +86,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // maybe use args?
-  updatePane: (id, calorieCount, portionSize) =>
-    dispatch(updatePane(id, calorieCount, portionSize)),
+  updatePane: (...args) => dispatch(updatePane(...args)),
   removePane: (id) => dispatch(removePane(id)),
 });
 
