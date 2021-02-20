@@ -7,7 +7,7 @@
 .header {
   width: 100%;
   height: 15vh;
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,4 +40,80 @@
     '. . .'
     '. log .'
     '. . .';
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 80%;
+  }
+
+  .header {
+    font-size: 3.1rem;
+  }
+
+  .container {
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .left-view,
+  .right-view {
+    width: 100%;
+  }
+
+  .left-view {
+    min-height: 70vh;
+    max-height: 90vh;
+    grid: 4fr 1fr 5fr 3fr / 1fr 4fr 1fr;
+    grid-template-areas:
+      '. . .'
+      '. search .'
+      '. table .'
+      '. . .';
+  }
+
+  .right-view {
+    min-height: 70vh;
+    max-height: 100vh;
+    grid: 7fr 1fr / 1fr 5fr 1fr;
+    grid-template-areas:
+      ' . log .'
+      '. . .';
+  }
+}
+
+@media (max-width: 770px) {
+  .left-view {
+    grid: 4fr 1fr 5fr 3fr / 1fr 8fr 1fr;
+    grid-template-areas:
+      '. . .'
+      '. search .'
+      '. table .'
+      '. . .';
+  }
+
+  .right-view {
+    grid: 7fr 1fr / 1fr 10fr 1fr;
+    grid-template-areas:
+      '. log .'
+      '. . .';
+  }
+}
+
+@media (max-width: 640px) {
+  .left-view {
+    grid: 4fr 1fr 5fr 3fr / 1fr;
+    grid-template-areas:
+      '.'
+      'search'
+      'table'
+      '.';
+  }
+
+  .right-view {
+    grid: 7fr 1fr / 1fr;
+    grid-template-areas:
+      'log'
+      '.';
+  }
 }
