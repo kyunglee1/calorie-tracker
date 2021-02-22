@@ -29,6 +29,7 @@
 
 .log-description {
   width: 30%;
+  word-break: break-word;
 }
 
 .serving-size {

@@ -102,6 +102,10 @@
 }
 
 @media (max-width: 640px) {
+  html {
+    font-size: 55%;
+  }
+
   .left-view {
     grid: 4fr 1fr 5fr 3fr / 1fr;
     grid-template-areas:
