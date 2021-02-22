@@ -22,16 +22,18 @@ const ResultsTable = ({ results, onAddClick }) => {
   }
 
   return (
-    <table className="results-table">
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Brand</th>
-          <th>Cal. per serving</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <div className="results-table-wrapper">
+      <table className="results-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Brand</th>
+            <th>Cal. per serving</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    </div>
   );
 };
 

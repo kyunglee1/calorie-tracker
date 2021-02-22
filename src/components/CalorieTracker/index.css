@@ -25,7 +25,7 @@
 
 .left-view {
   display: grid;
-  grid: 9fr 1fr 9fr 9fr / 1fr 4fr 1fr;
+  grid: 9fr 1fr 10fr 9fr / 1fr 4fr 1fr;
   grid-template-areas:
     '. . .'
     '. search .'
