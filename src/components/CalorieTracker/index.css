@@ -9,8 +9,9 @@
   height: 15vh;
   position: absolute;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  text-align: center;
   background-color: rgb(221, 150, 103);
   border-bottom: 5px double white;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -115,5 +116,12 @@
     grid-template-areas:
       'log'
       '.';
+  }
+}
+
+@media (max-width: 480px) {
+  .right-view {
+    grid: 1fr / 1fr;
+    grid-template-areas: 'log';
   }
 }
